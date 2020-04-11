@@ -1,0 +1,11 @@
+[package]
+name = "sheldon-cross"
+version = "0.0.0"
+authors = ["Ross MacArthur <ross@macarthur.io>"]
+edition = "2018"
+publish = false
+
+[dependencies]
+anyhow = "1.0.28"
+handlebars = "3.0.1"
+serde_json = "1.0.51"
