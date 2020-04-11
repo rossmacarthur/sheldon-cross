@@ -1,4 +1,4 @@
-FROM rustembedded/cross:{{triple}}
+FROM rustembedded/cross:{{target}}
 
 {{#if install_gnupg~}}
 RUN apt-get update \

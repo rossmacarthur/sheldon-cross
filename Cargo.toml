@@ -9,3 +9,8 @@ publish = false
 anyhow = "1.0.28"
 handlebars = "3.0.1"
 serde_json = "1.0.51"
+structopt = "0.3.13"
+
+[[bin]]
+name = "sheldon-cross"
+path = "render.rs"
