@@ -26,7 +26,7 @@ jobs:
     - name: Login
       run: docker login --username rossmacarthur --password "${{ secrets.DOCKER_TOKEN }}"
 
-    - name: Render
+    - name: Render Dockerfile
       run: cargo run -- --target "${{ matrix.target }}" --install-openssl-args "${{ matrix.install_openssl_args }}"
 
     - name: Build
