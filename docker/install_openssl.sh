@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
+#
+# Copied from https://github.com/rust-embedded/cross/blob/v0.1.16/docker/openssl.sh
 
-set -euxo pipefail
+set -ex
 
 main() {
     local version=1.1.1f

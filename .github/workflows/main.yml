@@ -1,0 +1,44 @@
+name: build
+
+on: [push]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+        - { target: "x86_64-unknown-linux-gnu", install_openssl_args: "linux-x86_64"}
+        - { target: "x86_64-unknown-linux-musl", install_openssl_args: "linux-x86_64 x86_64-linux-musl-"}
+        - { target: "armv7-unknown-linux-gnueabihf", install_openssl_args: "linux-armv4 arm-linux-gnueabihf-"}
+        - { target: "armv7-unknown-linux-musleabihf", install_openssl_args: "linux-armv4 arm-linux-musleabihf-"}
+
+    name: build (${{ matrix.target}})
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+
+    - name: Login
+      run: docker login --username rossmacarthur --password "${{ secrets.DOCKER_TOKEN }}"
+
+    - name: Render
+      run: cargo run -- --target "${{ matrix.target }}" --install-openssl-args "${{ matrix.install_openssl_args }}"
+
+    - name: Build
+      run: |
+        docker build \
+          --tag "${{ github.sha }}" \
+          --file "docker/Dockerfile.${{ matrix.target }}" \
+          docker
+
+    - name: Push
+      if: startsWith(github.event.ref, 'refs/tags')
+      run: |
+        tag="rossmacarthur/sheldon-cross:${{ matrix.target }}-${GITHUB_REF#refs/tags/}"
+        docker tag "${{ github.sha }}" "$tag"
+        docker push "$tag"

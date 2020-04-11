@@ -5,7 +5,7 @@ use handlebars::Handlebars;
 use serde_json::json;
 use structopt::StructOpt;
 
-const TEMPLATE: &str = include_str!("Dockerfile");
+const TEMPLATE: &str = include_str!("docker/Dockerfile.hbs");
 
 /// Renders a Dockerfile at `docker/Docker.<target>`.
 ///
