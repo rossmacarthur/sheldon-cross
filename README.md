@@ -14,8 +14,8 @@
 
 ## How it works
 
-- A Rust tool renders a [template Dockerfile](docker/Dockerfile.hbs) for a
-  particular target.
+- A Rust tool renders a Dockerfile from a [template
+  Dockerfile](docker/Dockerfile) for particular target.
 
 For each target
 - An image is built from this Dockerfile.

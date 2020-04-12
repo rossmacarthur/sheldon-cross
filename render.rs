@@ -5,7 +5,7 @@ use handlebars::Handlebars;
 use serde_json::json;
 use structopt::StructOpt;
 
-const TEMPLATE: &str = include_str!("docker/Dockerfile.hbs");
+const TEMPLATE: &str = include_str!("docker/Dockerfile");
 
 /// Renders a Dockerfile at `docker/Docker.<target>`.
 ///
@@ -35,14 +35,15 @@ fn main() -> anyhow::Result<()> {
         .collect();
     let data = json!({
         "target": opt.target,
-        "install_gnupg": opt.target.contains("musl"),
+        "is_musl": opt.target.contains("musl"),
         "install_openssl_args": opt.install_openssl_args,
     });
     let rendered = handlebars
         .render("dockerfile", &data)
         .context("failed to render Dockerfile")?;
-    fs::write(&path, rendered)
+    fs::write(&path, &rendered)
         .with_context(|| format!("failed to write to `{}`", path.display()))?;
-    println!("Rendered `{}`", path.display());
+    eprintln!("Rendered `{}`\n", path.display());
+    println!("{}", rendered);
     Ok(())
 }

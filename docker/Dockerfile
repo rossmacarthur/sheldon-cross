@@ -1,6 +1,6 @@
 FROM rustembedded/cross:{{target}}
 
-{{#if install_gnupg~}}
+{{#if is_musl ~}}
 RUN apt-get update \
   && apt-get install -y --no-install-recommends gnupg \
   && rm -rf /var/lib/apt/lists/*
@@ -14,5 +14,8 @@ COPY install_openssl.sh /
 RUN bash /install_openssl.sh {{install_openssl_args}}
 
 ENV OPENSSL_DIR=/openssl \
+{{~#if is_musl }}
+    OPENSSL_STATIC=1 \
+{{~/if}}
     OPENSSL_INCLUDE_DIR=/openssl/include \
     OPENSSL_LIB_DIR=/openssl/lib
