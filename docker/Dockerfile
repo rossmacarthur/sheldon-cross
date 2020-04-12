@@ -1,15 +1,5 @@
 FROM rustembedded/cross:{{target}}
 
-{{#if is_musl ~}}
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends gnupg \
-  && rm -rf /var/lib/apt/lists/*
-
-{{/if~}}
-
-COPY install_git.sh /
-RUN bash /install_git.sh
-
 COPY install_openssl.sh /
 RUN bash /install_openssl.sh {{install_openssl_args}}
 
