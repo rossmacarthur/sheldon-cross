@@ -25,11 +25,11 @@ jobs:
         toolchain: stable
         override: true
 
-    - name: Login
-      run: docker login --username rossmacarthur --password "${{ secrets.DOCKER_TOKEN }}"
-
     - name: Render Dockerfile
-      run: cargo run -- --target "${{ matrix.target }}" --install-openssl-args "${{ matrix.install_openssl_args }}"
+      run: |
+        cargo run -- \
+          --target "${{ matrix.target }}" \
+          --install-openssl-args "${{ matrix.install_openssl_args }}"
 
     - name: Build
       run: |
@@ -41,6 +41,7 @@ jobs:
     - name: Push
       if: startsWith(github.event.ref, 'refs/tags')
       run: |
+        docker login --username rossmacarthur --password "${{ secrets.DOCKER_TOKEN }}"
         tag="rossmacarthur/sheldon-cross:${{ matrix.target }}-${GITHUB_REF#refs/tags/}"
         docker tag "${{ github.sha }}" "$tag"
         docker push "$tag"
