@@ -28,7 +28,7 @@ For each target
 
 ### 0.2.1
 
-*Unreleased*
+*Released on May 11th, 2020*
 
 - [Add aarch64 support.][51bd78a]
 - [Update to OpenSSL 1.1.1g (CVE-2020-1967).][fd05011]
