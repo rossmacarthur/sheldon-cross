@@ -26,6 +26,12 @@ For each target
 
 ## Releases
 
+### 0.2.2
+
+*Released on September 22nd, 2020*
+
+No changes, just update to latest Cross base images.
+
 ### 0.2.1
 
 *Released on May 11th, 2020*
