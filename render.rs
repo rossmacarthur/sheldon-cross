@@ -1,9 +1,10 @@
-use std::{fs, path::PathBuf};
+use std::fs;
+use std::path::PathBuf;
 
 use anyhow::Context;
+use clap::Clap;
 use handlebars::Handlebars;
 use serde_json::json;
-use structopt::StructOpt;
 
 const TEMPLATE: &str = include_str!("docker/Dockerfile");
 
@@ -13,30 +14,30 @@ const TEMPLATE: &str = include_str!("docker/Dockerfile");
 /// images for use with [`sheldon`]'s CI.
 ///
 /// [`sheldon`]: https://github.com/rossmacarthur/sheldon
-#[derive(Debug, StructOpt)]
-struct Opt {
+#[derive(Debug, Clap)]
+struct Opts {
     /// The target triple.
-    #[structopt(long)]
+    #[clap(long)]
     target: String,
     /// OpenSSL install args.
-    #[structopt(long)]
+    #[clap(long)]
     install_openssl_args: String,
 }
 
 fn main() -> anyhow::Result<()> {
-    let opt = Opt::from_args();
+    let opts = Opts::parse();
     let mut handlebars = Handlebars::new();
     handlebars.set_strict_mode(true);
     handlebars
         .register_template_string("dockerfile", TEMPLATE)
         .context("failed to register template")?;
-    let path: PathBuf = ["docker", &format!("Dockerfile.{}", opt.target)]
+    let path: PathBuf = ["docker", &format!("Dockerfile.{}", opts.target)]
         .iter()
         .collect();
     let data = json!({
-        "target": opt.target,
-        "is_musl": opt.target.contains("musl"),
-        "install_openssl_args": opt.install_openssl_args,
+        "target": opts.target,
+        "is_musl": opts.target.contains("musl"),
+        "install_openssl_args": opts.install_openssl_args,
     });
     let rendered = handlebars
         .render("dockerfile", &data)
