@@ -4,6 +4,8 @@
 
 set -ex
 
+. lib.sh
+
 main() {
     local version=1.1.1j
     local os=$1
@@ -17,15 +19,7 @@ main() {
         perl
     )
 
-    # NOTE cross toolchain must be already installed
-    apt-get update
-    local purge_list=()
-    for dep in ${dependencies[@]}; do
-        if ! dpkg -L $dep; then
-            apt-get install --no-install-recommends -y $dep
-            purge_list+=( $dep )
-        fi
-    done
+    install_packages "${dependencies[@]}"
 
     td=$(mktemp -d)
 
@@ -42,7 +36,7 @@ main() {
     make install
 
     # clean up
-    apt-get purge --auto-remove -y ${purge_list[@]}
+    purge_packages
 
     popd
 
