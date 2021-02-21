@@ -1,16 +1,9 @@
-<h1 align="center">sheldon-cross</h1>
-<div align="center">
-  <strong>Docker images for <a href="https://github.com/rossmacarthur/sheldon">sheldon</a> CI</strong>
-</div>
-<br />
-<div align="center">
-  <a href="https://github.com/rossmacarthur/locks/actions?query=workflow%3Abuild">
-    <img src="https://img.shields.io/github/workflow/status/rossmacarthur/sheldon-cross/build/master" alt="Build status" />
-  </a>
-  <a href="https://hub.docker.com/r/rossmacarthur/sheldon-cross">
-    <img src="https://img.shields.io/badge/docker-latest-blue" alt="Docker repo" />
-  </a>
-</div>
+# sheldon-cross
+
+ [![Build status](https://img.shields.io/github/workflow/status/rossmacarthur/sheldon-cross/build/master)](https://github.com/rossmacarthur/locks/actions?query=workflow%3Abuild)
+ [![Docker repo](https://img.shields.io/badge/docker-latest-blue)](https://hub.docker.com/r/rossmacarthur/sheldon-cross)
+
+*Docker images for [sheldon](https://github.com/rossmacarthur/sheldon) CI.*
 
 ## How it works
 
@@ -28,19 +21,21 @@ For each target
 
 ### 0.2.3
 
-*Unreleased*
+*Released February 21st, 2021*
 
-- [Update to OpenSSL 1.1.1j.]
+- [Update to OpenSSL 1.1.1j.][a0b1d4e]
+
+[a0b1d4e]: https://github.com/rossmacarthur/sheldon-cross/commit/a0b1d4e6b253fe398abc24481b63f7aa1f5cefb4
 
 ### 0.2.2
 
-*Released on September 22nd, 2020*
+*Released September 22nd, 2020*
 
 No changes, just update to latest Cross base images.
 
 ### 0.2.1
 
-*Released on May 11th, 2020*
+*Released May 11th, 2020*
 
 - [Add aarch64 support.][51bd78a]
 - [Update to OpenSSL 1.1.1g (CVE-2020-1967).][fd05011]
@@ -50,7 +45,7 @@ No changes, just update to latest Cross base images.
 
 ### 0.2.0
 
-*Released on April 12th, 2020*
+*Released April 12th, 2020*
 
 - [Add OpenSSL lib directory to LD_LIBRARY_PATH for GNU targets.][6b9a9fa]
 - [Remove GnuPG and Git installs.][f9aa8d4]
@@ -62,7 +57,7 @@ No changes, just update to latest Cross base images.
 
 ### 0.1.0
 
-*Released on April 11th, 2020*
+*Released April 11th, 2020*
 
 Initial release.
 
