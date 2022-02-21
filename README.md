@@ -1,6 +1,6 @@
 # sheldon-cross
 
- [![Build status](https://img.shields.io/github/workflow/status/rossmacarthur/sheldon-cross/build/master)](https://github.com/rossmacarthur/locks/actions?query=workflow%3Abuild)
+ [![Build status](https://img.shields.io/github/workflow/status/rossmacarthur/sheldon-cross/build/trunk)](https://github.com/rossmacarthur/locks/actions?query=workflow%3Abuild)
  [![Docker repo](https://img.shields.io/badge/docker-latest-blue)](https://hub.docker.com/r/rossmacarthur/sheldon-cross)
 
 *Docker images for [sheldon](https://github.com/rossmacarthur/sheldon) CI.*
