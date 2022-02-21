@@ -3,7 +3,30 @@ name: build
 on: [push, pull_request]
 
 jobs:
+  tool:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Rust
+      run: |
+        rustup set profile minimal
+        rustup toolchain install stable
+        rustup override set stable
+
+    - name: Build
+      run: cargo build --release
+
+    - uses: actions/cache@v2
+      id: cache-tool
+      with:
+        path: target/release/sheldon-cross
+        key: ${{ runner.os }}-${{ hashFiles('Cargo.*', '*.rs') }}
+
   build:
+    needs: tool
+
     strategy:
       matrix:
         include:
@@ -18,16 +41,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
-    - uses: actions-rs/toolchain@v1
+    - uses: actions/cache@v2
+      id: cache-tool
       with:
-        toolchain: stable
-        override: true
+        path: target/release/sheldon-cross
+        key: ${{ runner.os }}-${{ hashFiles('Cargo.*', '*.rs') }}
 
     - name: Render Dockerfile
       run: |
-        cargo run -- \
+        ./target/release/sheldon-cross \
           --target "${{ matrix.target }}" \
           --install-openssl-args "${{ matrix.install_openssl_args }}"
 
