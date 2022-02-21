@@ -2,7 +2,7 @@ use std::fs;
 use std::path::PathBuf;
 
 use anyhow::Context;
-use clap::Clap;
+use clap::Parser;
 use handlebars::Handlebars;
 use serde_json::json;
 
@@ -14,7 +14,7 @@ const TEMPLATE: &str = include_str!("docker/Dockerfile");
 /// images for use with [`sheldon`]'s CI.
 ///
 /// [`sheldon`]: https://github.com/rossmacarthur/sheldon
-#[derive(Debug, Clap)]
+#[derive(Debug, Parser)]
 struct Opts {
     /// The target triple.
     #[clap(long)]
