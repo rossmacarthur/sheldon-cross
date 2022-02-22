@@ -7,29 +7,18 @@ jobs:
     strategy:
       matrix:
         include:
-        - { target: "x86_64-unknown-linux-gnu", install_openssl_args: "linux-x86_64"}
-        - { target: "x86_64-unknown-linux-musl", install_openssl_args: "linux-x86_64 x86_64-linux-musl-"}
-        - { target: "armv7-unknown-linux-gnueabihf", install_openssl_args: "linux-armv4 arm-linux-gnueabihf-"}
-        - { target: "armv7-unknown-linux-musleabihf", install_openssl_args: "linux-armv4 arm-linux-musleabihf-"}
-        - { target: "aarch64-unknown-linux-gnu", install_openssl_args: "linux-aarch64 aarch64-linux-gnu-"}
-        - { target: "aarch64-unknown-linux-musl", install_openssl_args: "linux-aarch64 aarch64-linux-musl-"}
+        - { target: "x86_64-unknown-linux-gnu" }
+        - { target: "x86_64-unknown-linux-musl" }
+        - { target: "armv7-unknown-linux-gnueabihf" }
+        - { target: "armv7-unknown-linux-musleabihf" }
+        - { target: "aarch64-unknown-linux-gnu" }
+        - { target: "aarch64-unknown-linux-musl" }
 
     name: build (${{ matrix.target}})
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-
-    - uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-        override: true
-
-    - name: Render Dockerfile
-      run: |
-        cargo run -- \
-          --target "${{ matrix.target }}" \
-          --install-openssl-args "${{ matrix.install_openssl_args }}"
+    - uses: actions/checkout@v2
 
     - name: Build
       run: |

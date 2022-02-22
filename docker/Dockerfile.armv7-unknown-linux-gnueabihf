@@ -1,0 +1,10 @@
+FROM rustembedded/cross:armv7-unknown-linux-gnueabihf
+
+COPY install_openssl.sh /
+RUN bash /install_openssl.sh linux-armv4 arm-linux-gnueabihf-
+
+ENV OPENSSL_DIR=/openssl \
+    LD_LIBRARY_PATH="/openssl/lib:${LD_LIBRARY_PATH}" \
+    OPENSSL_INCLUDE_DIR=/openssl/include \
+    OPENSSL_LIB_DIR=/openssl/lib
+

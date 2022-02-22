@@ -1,0 +1,10 @@
+FROM rustembedded/cross:armv7-unknown-linux-musleabihf
+
+COPY install_openssl.sh /
+RUN bash /install_openssl.sh linux-armv4 arm-linux-musleabihf-
+
+ENV OPENSSL_DIR=/openssl \
+    OPENSSL_STATIC=1 \
+    OPENSSL_INCLUDE_DIR=/openssl/include \
+    OPENSSL_LIB_DIR=/openssl/lib
+
