@@ -1,10 +1,8 @@
 use std::fs;
 use std::path::PathBuf;
 
-use anyhow::Context;
+use anyhow::{anyhow, Context};
 use clap::Parser;
-use handlebars::Handlebars;
-use serde_json::json;
 
 const TEMPLATE: &str = include_str!("docker/Dockerfile");
 
@@ -26,24 +24,25 @@ struct Opts {
 
 fn main() -> anyhow::Result<()> {
     let opts = Opts::parse();
-    let mut handlebars = Handlebars::new();
-    handlebars.set_strict_mode(true);
-    handlebars
-        .register_template_string("dockerfile", TEMPLATE)
-        .context("failed to register template")?;
+
+    let data = upon::value! {
+        target: &opts.target,
+        is_musl: &opts.target.contains("musl"),
+        install_openssl_args: opts.install_openssl_args,
+    };
+
+    let rendered = upon::Engine::new()
+        .compile(TEMPLATE)
+        .map_err(|err| anyhow!("{:?}", err))?
+        .render(data)?;
+
     let path: PathBuf = ["docker", &format!("Dockerfile.{}", opts.target)]
         .iter()
         .collect();
-    let data = json!({
-        "target": opts.target,
-        "is_musl": opts.target.contains("musl"),
-        "install_openssl_args": opts.install_openssl_args,
-    });
-    let rendered = handlebars
-        .render("dockerfile", &data)
-        .context("failed to render Dockerfile")?;
+
     fs::write(&path, &rendered)
         .with_context(|| format!("failed to write to `{}`", path.display()))?;
+
     eprintln!("Rendered `{}`\n", path.display());
     println!("{}", rendered);
     Ok(())

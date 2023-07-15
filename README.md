@@ -1,7 +1,7 @@
 # sheldon-cross
 
- [![Build status](https://img.shields.io/github/workflow/status/rossmacarthur/sheldon-cross/build/trunk)](https://github.com/rossmacarthur/locks/actions?query=workflow%3Abuild)
- [![Docker repo](https://img.shields.io/badge/docker-latest-blue)](https://hub.docker.com/r/rossmacarthur/sheldon-cross)
+[![Build status](https://img.shields.io/github/actions/workflow/status/rossmacarthur/sheldon/build.yaml?branch=trunk)](https://github.com/rossmacarthur/sheldon-cross/actions/workflows/build.yaml?query=branch%3Atrunk)
+[![Docker repo](https://img.shields.io/badge/docker-latest-blue)](https://hub.docker.com/r/rossmacarthur/sheldon-cross)
 
 *Docker images for [sheldon](https://github.com/rossmacarthur/sheldon) CI.*
 

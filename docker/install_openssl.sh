@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copied from https://github.com/rust-embedded/cross/blob/v0.1.16/docker/openssl.sh
+# Copied from https://github.com/cross-rs/cross/blob/v0.1.16/docker/openssl.sh
 
 set -ex
 
