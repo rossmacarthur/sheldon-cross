@@ -2,28 +2,23 @@ use std::fs;
 use std::path::PathBuf;
 
 use anyhow::{anyhow, Context};
-use clap::Parser;
+use argh::FromArgs;
 
 const TEMPLATE: &str = include_str!("docker/Dockerfile");
 
 /// Renders a Dockerfile at `docker/Docker.<target>`.
-///
-/// This is a simple tool to render Dockerfiles that will be published as Docker
-/// images for use with [`sheldon`]'s CI.
-///
-/// [`sheldon`]: https://github.com/rossmacarthur/sheldon
-#[derive(Debug, Parser)]
+#[derive(Debug, FromArgs)]
 struct Opts {
-    /// The target triple.
-    #[clap(long)]
+    /// the target triple.
+    #[argh(option)]
     target: String,
-    /// OpenSSL install args.
-    #[clap(long)]
+    /// the OpenSSL install args.
+    #[argh(option)]
     install_openssl_args: String,
 }
 
 fn main() -> anyhow::Result<()> {
-    let opts = Opts::parse();
+    let opts: Opts = argh::from_env();
 
     let data = upon::value! {
         target: &opts.target,
