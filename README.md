@@ -1,3 +1,8 @@
+# Deprecated
+
+This project is superseded by
+[cross-openssl](https://github.com/rossmacarthur/cross-openssl)
+
 # sheldon-cross
 
 [![Build status](https://img.shields.io/github/actions/workflow/status/rossmacarthur/sheldon/build.yaml?branch=trunk)](https://github.com/rossmacarthur/sheldon-cross/actions/workflows/build.yaml?query=branch%3Atrunk)
